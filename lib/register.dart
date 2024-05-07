@@ -28,7 +28,7 @@ class _RegisterState extends State<Register> {
         isLoading = true;
       });
       http.Response res = await http.post(
-        Uri.parse('http://192.168.0.105/kebudayaan_server/register.php'),
+        Uri.parse('http://192.168.0.100/kebudayaan_server/register.php'),
         body: {
           "fullname": txtFullname.text,
           "phone": txtPhone.text,

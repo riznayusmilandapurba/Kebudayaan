@@ -27,7 +27,7 @@ class _LoginState extends State<Login> {
         isLoading = true;
       });
       http.Response res = await http.post(
-        Uri.parse('http://192.168.0.103/kebudayaan_server/login.php'),
+        Uri.parse('http://172.22.0.42/kebudayaan_server/login.php'),
         body: {
           "email": txtEmail.text,
           "password": txtPassword.text,
@@ -78,7 +78,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(255, 253, 242, 178),
+        color: Color.fromRGBO(255, 247, 212, 1),
         padding: const EdgeInsets.all(20.0),
         child: Form(
           key: keyForm,
