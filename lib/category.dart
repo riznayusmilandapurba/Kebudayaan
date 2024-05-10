@@ -6,7 +6,6 @@ import 'package:kebudayaan/tradisi.dart';
 import 'package:kebudayaan/budaya.dart';
 import 'package:kebudayaan/user.dart';
 import 'package:kebudayaan/warisanseni.dart';
-import 'package:kebudayaan/gallery.dart';
 import 'package:kebudayaan/sejarawan.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kebudayaan/user.dart';
@@ -137,30 +136,6 @@ class _CategoryState extends State<Category> {
                   minimumSize: Size(346, 69),
                 ),
                 child: Text('WARISAN SENI',
-                style: GoogleFonts.raleway(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
-              ),
-              SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Gallery()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:  Color.fromARGB(255, 253, 242, 178), 
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), 
-                    side: BorderSide(color: Color.fromRGBO(191, 0, 0, 1)),
-                  ),
-                  minimumSize: Size(346, 69),
-                ),
-                child: Text('GALLERY',
                 style: GoogleFonts.raleway(
                   fontSize: 16,
                   color: Colors.black,

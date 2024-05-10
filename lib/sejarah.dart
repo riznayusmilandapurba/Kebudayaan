@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kebudayaan/gallerysejarah.dart';
 import 'package:kebudayaan/sejarahdetail.dart';
 import 'package:kebudayaan/user.dart';
 import 'package:kebudayaan/category.dart';
@@ -31,7 +32,7 @@ class _SejarahState extends State<Sejarah> {
 
   Future<void> _getsejarah() async {
     try {
-      http.Response res = await http.get(Uri.parse('http://172.22.0.42/kebudayaan_server/getSejarah.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.0.100/kebudayaan_server/getSejarah.php'));
       if (res.statusCode == 200) {
         List<Datum> sejarahList = ModelSejarahFromJson(res.body).data ?? [];
         setState(() {
@@ -62,11 +63,12 @@ class _SejarahState extends State<Sejarah> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(191, 0, 0, 1),
-        toolbarHeight: 105,
-        title: Column(
-          children: [
-            SizedBox(
+      backgroundColor: Color.fromRGBO(191, 0, 0, 1),
+      toolbarHeight: 105,
+      title: Row(
+        children: [
+          Expanded(
+            child: SizedBox(
               height: 34,
               child: TextField(
                 controller: _searchController,
@@ -79,25 +81,36 @@ class _SejarahState extends State<Sejarah> {
                     color: Colors.grey,
                   ),
                   border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   filled: true,
                   fillColor: Color.fromRGBO(255, 247, 212, 1),
                 ),
               ),
             ),
-          ],
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+          IconButton(
+            icon: Icon(Icons.picture_in_picture),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => GallerySejarah()),
+              );
+            },
+          ),
+        ],
       ),
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    ),
       body: ListView.builder(
         itemCount: _filteredSejarah.length,
         itemBuilder: (context, index) {
@@ -126,7 +139,7 @@ class _SejarahState extends State<Sejarah> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
-                        'http://172.22.0.42/kebudayaan_server/gambar_kebudayaan/${data.gambar}',
+                        'http://192.168.0.100/kebudayaan_server/gambar_kebudayaan/${data.gambar}',
                         width: double.infinity,
                         height: 162,
                         fit: BoxFit.cover,
