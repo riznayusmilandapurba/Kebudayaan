@@ -31,7 +31,7 @@ class _BudayaState extends State<Budaya> {
 
   Future<void> _getbudaya() async {
     try {
-      http.Response res = await http.get(Uri.parse('http://192.168.0.100//kebudayaan_server/getBudaya.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.100.97//kebudayaan_server/getBudaya.php'));
       if (res.statusCode == 200) {
         List<Datum> budayaList = ModelBudayaFromJson(res.body).data ?? [];
         setState(() {
@@ -138,7 +138,7 @@ class _BudayaState extends State<Budaya> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
-                        'http://192.168.0.100//kebudayaan_server/gambar_kebudayaan/${data.gambar}',
+                        'http://192.168.100.97//kebudayaan_server/gambar_kebudayaan/${data.gambar}',
                         width: double.infinity,
                         height: 162,
                         fit: BoxFit.cover,
@@ -207,7 +207,6 @@ class _BudayaState extends State<Budaya> {
           ),
         ],
         backgroundColor: Color.fromRGBO(191, 0, 0, 1),
-        selectedItemColor: Colors.white,
         onTap: (int index) {
           switch (index) {
             case 0:

@@ -17,7 +17,7 @@ class GalleryTradisi extends StatefulWidget {
 class _GalleryTradisiState extends State<GalleryTradisi> {
   Future<List<Datum>?> getGalleryTradisi() async{
     try{
-      http.Response res = await http.get(Uri.parse('http://192.168.0.100/kebudayaan_server/getTradisi.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.100.97kebudayaan_server/getTradisi.php'));
       return ModelTradisiFromJson(res.body).data;
     }catch(e){
       setState(() {
@@ -83,7 +83,7 @@ class _GalleryTradisiState extends State<GalleryTradisi> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
-                                  'http://192.168.0.100/kebudayaan_server/gambar_kebudayaan/${data?.gambar}',
+                                  'http://192.168.100.97/kebudayaan_server/gambar_kebudayaan/${data?.gambar}',
                                   fit: BoxFit.cover, // Menggunakan BoxFit.cover agar gambar mengisi area dengan mempertahankan aspek rasio
                                 ),
                               ),
@@ -125,7 +125,6 @@ class _GalleryTradisiState extends State<GalleryTradisi> {
           ),
         ],
         backgroundColor: Color.fromRGBO(191, 0, 0, 1),
-        selectedItemColor: Colors.white,
         onTap: (int index) {
           switch (index) {
             case 0:

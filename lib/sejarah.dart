@@ -32,7 +32,7 @@ class _SejarahState extends State<Sejarah> {
 
   Future<void> _getsejarah() async {
     try {
-      http.Response res = await http.get(Uri.parse('http://192.168.0.100/kebudayaan_server/getSejarah.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.100.97/kebudayaan_server/getSejarah.php'));
       if (res.statusCode == 200) {
         List<Datum> sejarahList = ModelSejarahFromJson(res.body).data ?? [];
         setState(() {
@@ -139,7 +139,7 @@ class _SejarahState extends State<Sejarah> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
-                        'http://192.168.0.100/kebudayaan_server/gambar_kebudayaan/${data.gambar}',
+                        'http://192.168.100.97/kebudayaan_server/gambar_kebudayaan/${data.gambar}',
                         width: double.infinity,
                         height: 162,
                         fit: BoxFit.cover,
@@ -208,7 +208,6 @@ class _SejarahState extends State<Sejarah> {
           ),
         ],
         backgroundColor: Color.fromRGBO(191, 0, 0, 1),
-        selectedItemColor: Colors.white,
         onTap: (int index) {
           switch (index) {
             case 0:

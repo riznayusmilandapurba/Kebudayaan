@@ -7,6 +7,9 @@ import 'package:kebudayaan/model/modelsejarawandd.dart';
 import 'package:http/http.dart' as http;
 import 'package:kebudayaan/sejarawan.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:intl/intl.dart';
+
 
 
 
@@ -18,7 +21,7 @@ class SejarawanAdd extends StatefulWidget {
 }
 
 class _SejarawanAddState extends State<SejarawanAdd> {
-    final TextEditingController txtNama = TextEditingController();
+  final TextEditingController txtNama = TextEditingController();
   final TextEditingController txtTglLahir = TextEditingController();
   final TextEditingController txtAsal = TextEditingController();
   final TextEditingController txtJK = TextEditingController();
@@ -46,7 +49,7 @@ class _SejarawanAddState extends State<SejarawanAdd> {
 
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://192.168.0.100/kebudayaan_server/postSejarawan.php'),
+        Uri.parse('http://192.168.100.97/kebudayaan_server/postSejarawan.php'),
       );
 
       request.fields['nama'] = txtNama.text;
@@ -70,7 +73,10 @@ class _SejarawanAddState extends State<SejarawanAdd> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Berhasil Tambah Data')),
         );
-        Navigator.pop(context);
+        Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Sejarawan()),
+      );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Gagal Tambah Data')),

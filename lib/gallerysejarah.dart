@@ -18,7 +18,7 @@ class GallerySejarah extends StatefulWidget {
 class _GallerySejarahState extends State<GallerySejarah> {
  Future<List<Datum>?> getGallerySejarah() async{
     try{
-      http.Response res = await http.get(Uri.parse('http://192.168.0.100/kebudayaan_server/getSejarah.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.100.97/kebudayaan_server/getSejarah.php'));
       return ModelSejarahFromJson(res.body).data;
     }catch(e){
       setState(() {
@@ -127,7 +127,6 @@ class _GallerySejarahState extends State<GallerySejarah> {
           ),
         ],
         backgroundColor: Color.fromRGBO(191, 0, 0, 1),
-        selectedItemColor: Colors.white,
         onTap: (int index) {
           switch (index) {
             case 0:

@@ -27,7 +27,7 @@ class _LoginState extends State<Login> {
         isLoading = true;
       });
       http.Response res = await http.post(
-        Uri.parse('http://192.168.0.100/kebudayaan_server/login.php'),
+        Uri.parse('http://192.168.100.97/kebudayaan_server/login.php'),
         body: {
           "email": txtEmail.text,
           "password": txtPassword.text,

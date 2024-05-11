@@ -17,7 +17,7 @@ class GalleryWarisanseni extends StatefulWidget {
 class _GalleryWarisanseniState extends State<GalleryWarisanseni> {
  Future<List<Datum>?> getGalleryWarisanseni() async{
     try{
-      http.Response res = await http.get(Uri.parse('http://192.168.0.100/kebudayaan_server/getWarisanseni.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.100.97/kebudayaan_server/getWarisanseni.php'));
       return ModelWarisanseniFromJson(res.body).data;
     }catch(e){
       setState(() {
@@ -84,7 +84,7 @@ class _GalleryWarisanseniState extends State<GalleryWarisanseni> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
-                                  'http://192.168.0.100/kebudayaan_server/gambar_kebudayaan/${data?.gambar}',
+                                  'http://192.168.100.97/kebudayaan_server/gambar_kebudayaan/${data?.gambar}',
                                   fit: BoxFit.cover, 
                                 ),
                               ),
@@ -126,7 +126,6 @@ class _GalleryWarisanseniState extends State<GalleryWarisanseni> {
           ),
         ],
         backgroundColor: Color.fromRGBO(191, 0, 0, 1),
-        selectedItemColor: Colors.white,
         onTap: (int index) {
           switch (index) {
             case 0:
