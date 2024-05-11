@@ -17,7 +17,7 @@ class GalleryBudaya extends StatefulWidget {
 class _GalleryBudayaState extends State<GalleryBudaya> {
  Future<List<Datum>?> getGalleryBudaya() async{
     try{
-      http.Response res = await http.get(Uri.parse('http://192.168.0.100/kebudayaan_server/getBudaya.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.100.97/kebudayaan_server/getBudaya.php'));
       return ModelBudayaFromJson(res.body).data;
     }catch(e){
       setState(() {

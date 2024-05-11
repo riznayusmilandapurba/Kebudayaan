@@ -74,9 +74,10 @@ class _RegisterState extends State<Register> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: SingleChildScrollView(
+      child: Container(
         color: Color.fromARGB(255, 253, 242, 178),
         padding: const EdgeInsets.all(20.0),
         child: Form(
@@ -206,6 +207,7 @@ class _RegisterState extends State<Register> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
