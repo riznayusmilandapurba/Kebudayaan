@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $jk = $_POST['jk'];
     $deskripsi = $_POST['deskripsi'];
     $foto = "";
+
     if(isset($_FILES['foto']['name'])){
         $file_name = $_FILES['foto']['name'];
         $file_size = $_FILES['foto']['size'];
@@ -29,21 +30,31 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             exit();
         }
         
-        $upload_path = "http://192.168.0.100/kebudayaan_server/gambar_sejarawan/".$file_name; // Ganti example.com dengan domain Anda
-        move_uploaded_file($file_tmp,"gambar_sejarawan/".$file_name);
-        $foto = $upload_path;
+        $upload_path = "C:/xampp/htdocs/kebudayaan_server/gambar_sejarawan/".$file_name; 
+        if(move_uploaded_file($file_tmp, $upload_path)){
+            // File berhasil diunggah, simpan nama file ke dalam database
+            $foto = $file_name;
+        } else {
+            $response['value'] = 0;
+            $response['message'] = "Gagal mengunggah file gambar.";
+            echo json_encode($response);
+            exit();
+        }
     }
 
     $insert = "INSERT INTO sejarawan (nama, tgl_lahir, asal, jk, deskripsi, foto) 
-               VALUES ('$nama', '$tgl_lahir', '$asal', '$jk', '$deskripsi', '$foto')";
+               VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $koneksi->prepare($insert);
+    $stmt->bind_param("ssssss", $nama, $tgl_lahir, $asal, $jk, $deskripsi, $foto);
 
-    if (mysqli_query($koneksi, $insert)) {
+    if ($stmt->execute()) {
         $response['value'] = 1;
         $response['message'] = "Berhasil Tambah Data";
     } else {
         $response['value'] = 0;
-        $response['message'] = "Tambah Data: " . mysqli_error($koneksi);
+        $response['message'] = "Tambah Data: " . $stmt->error;
     }
+    $stmt->close();
 } else {
     $response['value'] = 0;
     $response['message'] = "Metode permintaan tidak valid";

@@ -17,7 +17,7 @@ class GalleryTradisi extends StatefulWidget {
 class _GalleryTradisiState extends State<GalleryTradisi> {
   Future<List<Datum>?> getGalleryTradisi() async{
     try{
-      http.Response res = await http.get(Uri.parse('http://192.168.100.97kebudayaan_server/getTradisi.php'));
+      http.Response res = await http.get(Uri.parse('http://192.168.100.97/kebudayaan_server/getTradisi.php'));
       return ModelTradisiFromJson(res.body).data;
     }catch(e){
       setState(() {

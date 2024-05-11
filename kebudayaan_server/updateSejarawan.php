@@ -1,45 +1,72 @@
 <?php
 
-header("Access-Control-Allow-Origin: header");
 header("Access-Control-Allow-Origin: *");
 
 include 'koneksi.php';
 
-$id = $_POST['id'];
-$nama = $_POST['nama'];
-$tgl_lahir = $_POST['tgl_lahir'];
-$asal = $_POST['asal'];
-$jk = $_POST['jk'];
-$deskripsi = $_POST['deskripsi'];
-$foto = $_POST['foto'];
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+    $response = array();
 
-$sql = "UPDATE sejarawan SET nama = '$nama', tgl_lahir = '$tgl_lahir', asal = '$asal', jk = '$jk', deskripsi = '$deskripsi', foto = '$foto' WHERE id=$id";
-$isSuccess = $koneksi->query($sql);
+    $id = $_POST['id'];
+    $nama = $_POST['nama'];
+    $tgl_lahir = $_POST['tgl_lahir'];
+    $asal = $_POST['asal'];
+    $jk = $_POST['jk'];
+    $deskripsi = $_POST['deskripsi'];
+    $foto = "";
 
+    if(isset($_FILES['foto']['name'])){
+        $file_name = $_FILES['foto']['name'];
+        $file_size = $_FILES['foto']['size'];
+        $file_tmp = $_FILES['foto']['tmp_name'];
+        $file_type = $_FILES['foto']['type'];
+        
+        $extensions= array("jpeg","jpg","png");
+        $file_ext = strtolower(end(explode('.',$_FILES['foto']['name'])));
+        
+        if(in_array($file_ext,$extensions)=== false){
+            $response['value'] = 0;
+            $response['message'] = "Extensi file tidak diperbolehkan, gunakan file JPEG atau PNG.";
+            echo json_encode($response);
+            exit();
+        }
+        
+        $upload_path = "C:/xampp/htdocs/kebudayaan_server/gambar_sejarawan/".$file_name; 
+        if(move_uploaded_file($file_tmp, $upload_path)){
+            // File berhasil diunggah, simpan nama file ke dalam database
+            $foto = $file_name;
+        } else {
+            $response['value'] = 0;
+            $response['message'] = "Gagal mengunggah file gambar.";
+            echo json_encode($response);
+            exit();
+        }
+    }
 
-$res = [];
-if ($isSuccess) {
-    $cek = "SELECT * FROM sejarawan WHERE id = $id";
-    $result = mysqli_fetch_assoc(mysqli_query($koneksi, $cek));
+    $sql = "UPDATE sejarawan SET nama = '$nama', tgl_lahir = '$tgl_lahir', asal = '$asal', jk = '$jk', deskripsi = '$deskripsi', foto = '$foto' WHERE id = $id";
+    $isSuccess = $koneksi->query($sql);
 
-    $res['is_success'] = true;
-    $res['value'] = 1;
-    $res['message'] = "Berhasil edit data sejarawan";
-    $res['nama'] = $result['nama'];
-    $res['tgl_lahir'] = $result['tgl_lahir'];
-    $res['asal'] = $result['asal'];
-    $res['jk'] = $result['jk'];
-    $res['deskripsi'] = $result['deskripsi'];
-    $res['foto'] = $result['foto'];
-    $res['id'] = $result['id'];
+    if ($isSuccess) {
+        $cek = "SELECT * FROM sejarawan WHERE id = $id";
+        $result = mysqli_fetch_assoc(mysqli_query($koneksi, $cek));
+
+        $response['is_success'] = true;
+        $response['value'] = 1;
+        $response['message'] = "Berhasil edit data sejarawan";
+        $response['data'] = $result;
+    } else {
+        $response['is_success'] = false;
+        $response['value'] = 0;
+        $response['message'] = "Gagal edit data sejarawan";
+    }
+
 } else {
-    $res['is_success'] = false;
-    $res['value'] = 0;
-    $res['message'] = "Gagal edit data sejarawan";
+    $response['is_success'] = false;
+    $response['value'] = 0;
+    $response['message'] = "Metode permintaan tidak valid";
 }
 
-
-echo json_encode($res);
+echo json_encode($response);
 
 ?>
